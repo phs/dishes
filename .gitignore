@@ -9,3 +9,4 @@ bin/*
 .kitchen.local.yml
 
 *.sublime-workspace
+Gemfile.lock

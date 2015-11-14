@@ -1,7 +1,7 @@
 rvm: 2.2
 cache: bundler
 
-sudo: false
+sudo: true
 
 addons:
   apt:
@@ -9,12 +9,3 @@ addons:
     - chef-current-precise
     packages:
     - chefdk
-
-before_script:
-- eval "$(/opt/chefdk/bin/chef shell-init bash)"
-
-script:
-- "/opt/chefdk/embedded/bin/chef --version"
-- "/opt/chefdk/embedded/bin/rubocop --version"
-- "/opt/chefdk/embedded/bin/foodcritic --version"
-- "/opt/chefdk/embedded/bin/rake"

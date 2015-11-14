@@ -1,0 +1,25 @@
+---
+driver:
+  name: <%= ENV['TRAVIS'] ? 'localhost' : 'vagrant' %>
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: ubuntu-12.04
+
+suites:
+  - name: default
+    run_list:
+      - recipe[test_dishes::integration_test_recipe]
+    attributes:
+      dishes:
+        dish:
+          first_dish:
+            recipe: test_dishes::first_dish_recipe
+            wash_recipe: test_dishes::first_wash_recipe
+            sink: default
+          second_dish:
+            recipe: test_dishes::second_dish_recipe
+            wash_recipe: test_dishes::second_wash_recipe
+            sink: default

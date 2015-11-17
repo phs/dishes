@@ -9,3 +9,21 @@ addons:
     - chef-current-precise
     packages:
     - chefdk
+
+before_install:
+- >-
+    openssl aes-256-cbc
+    -K $encrypted_d3e4a094b2b1_key
+    -iv $encrypted_d3e4a094b2b1_iv
+    -in .travis/supermarket-key.pem.enc
+    -out .travis/supermarket-key.pem -d
+
+deploy:
+  edge: true
+  provider: chef-supermarket
+  user_id: phs
+  client_key: ".travis/supermarket-key.pem"
+  cookbook_category: Utilities
+  skip_cleanup: true
+  on:
+    tags: true

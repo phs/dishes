@@ -14,7 +14,7 @@ Chef itself does not offer a way to cleanup removed entries from a run list as a
 
 That works, but it requires that the clean up recipe exists and that the administrator is aware of the issue and so can take action.  This however scales poorly: consider that the offending daemons might be brought as transitive cookbook dependencies.  It would better if Chef could do this for us.
 
-It turns out that it can, with some help.  This cookbook supplies two LWRPs named `dishes_dish` and `dishes_sink`, which work together to enable Chef (and recipe authors) to react to recipes removed from a run list by including corrosponding "cleanup" recipes.
+It turns out that it can, with some help.  This cookbook supplies two LWRPs named `dishes_dish` and `dishes_sink`, which work together to enable Chef (and recipe authors) to react to recipes removed from a run list by including corresponding "cleanup" recipes.
 
 [split-brain-wikipedia]: https://en.wikipedia.org/wiki/Split-brain_(computing)
 
@@ -32,9 +32,11 @@ end
 dishes_sink 'default'
 ```
 
+In this example, the `cookbook::daemon` recipe uses a dish.  The dish declares that when `cookbook::daemon` vanishes from the run list, the `dishes_sink` should respond by including the `cookbook::disable_daemon` recipe.
+
 One attaches a cleanup (or "wash") recipe to a monitored recipe with `dishes_dish`.  The association is kept in a hidden normal attribute and thus lives in the state of the Chef server.  Nothing is saved on the node itself.  Each recipe that needs cleanup actions should use a dish.
 
-A recipe is allowed to use its _own_ dish, allowing cookbooks to clean up after themselves (but see below about sinks) however it is not required.  Dishes and corrosponding wash recipes can also live in a wrapper cookbook.
+A recipe is allowed to use its _own_ dish, allowing cookbooks to clean up after themselves (but see below about sinks) however it is not required.  Dishes and corrosponding wash recipes can also live in a wrapper cookbook.  In our example above, the `dishes_dish` and `dishes_sink` resources might live in `wrapper_cookbook::install_daemon`.
 
 Dishes themselves do not take action, they just keep the books.  To actually wash the dirty dishes, one needs a `dishes_sink`.  A sink is a labeled bag of dishes.  Like dishes, sinks do not represent any aspect of the node, and are in fact stateless.  Dishes choose what sink they are placed in.
 

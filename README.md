@@ -1,5 +1,14 @@
 # dishes #
 
+[![Build Status][travis-badge]][travis-url]
+[![Cookbook Version][supermarket-badge]][supermarket-url]
+
+[travis-url]: https://travis-ci.org/phs/dishes
+[travis-badge]: https://travis-ci.org/phs/dishes.svg?branch=master
+
+[supermarket-url]: https://community.opscode.com/cookbooks/dishes
+[supermarket-badge]: https://img.shields.io/cookbook/v/dishes.svg
+
 Chef cookbook to clean up recipes after removal
 
 ## Motivation ##

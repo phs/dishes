@@ -45,11 +45,11 @@ In this example, the `cookbook::daemon` recipe uses a dish.  The dish declares t
 
 One attaches a cleanup (or "wash") recipe to a monitored recipe with `dishes_dish`.  The association is kept in a hidden normal attribute and thus lives in the state of the Chef server.  Nothing is saved on the node itself.  Each recipe that needs cleanup actions should use a dish.
 
-A recipe is allowed to use its _own_ dish, allowing cookbooks to clean up after themselves (but see below about sinks) however it is not required.  Dishes and corrosponding wash recipes can also live in a wrapper cookbook.  In our example above, the `dishes_dish` and `dishes_sink` resources might live in `wrapper_cookbook::install_daemon`.
+A recipe is allowed to use its _own_ dish, allowing cookbooks to clean up after themselves (but see below about sinks) however it is not required.  Dishes and corresponding wash recipes can also live in a wrapper cookbook.  In our example above, the `dishes_dish` and `dishes_sink` resources might live in `wrapper_cookbook::install_daemon`.
 
 Dishes themselves do not take action, they just keep the books.  To actually wash the dirty dishes, one needs a `dishes_sink`.  A sink is a labeled bag of dishes.  Like dishes, sinks do not represent any aspect of the node, and are in fact stateless.  Dishes choose what sink they are placed in.
 
-When the `dishes_sink` runs, it examines the Chef server's attribute state to see what dishes have been placed into it, now or in the past.  It then examines each and if a dish is deemed "dirty" (its naming recipe is absent from the run list) the sink will `include_recipe` the corrosponding `wash_recipe`, thereby "washing" it.  Dishes whose wash recipe is already present in the run list are considered clean.
+When the `dishes_sink` runs, it examines the Chef server's attribute state to see what dishes have been placed into it, now or in the past.  It then examines each and if a dish is deemed "dirty" (its naming recipe is absent from the run list) the sink will `include_recipe` the corresponding `wash_recipe`, thereby "washing" it.  Dishes whose wash recipe is already present in the run list are considered clean.
 
 While dishes leave traces of themselves behind in the Chef server, sinks do not.  Therefore if the recipe containing `dishes_sink` is removed, nothing gets clean.  Though one might imagine a dedicated service to wash the dirty dishes even if the sink recipe is absent, this is currently out of scope.
 

@@ -17,5 +17,9 @@ end
 group :integration do
   gem 'test-kitchen', '~> 1.4'
   gem 'kitchen-vagrant', '~> 0.19'
+end
+
+group :ci do
+  gem 'travis', '~> 1.8.0'
   gem 'kitchen-localhost', '~> 0.3'
 end

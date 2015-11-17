@@ -11,3 +11,5 @@ bin/*
 *.sublime-workspace
 Gemfile.lock
 Berksfile.lock
+
+*.pem
